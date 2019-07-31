@@ -1,24 +1,42 @@
 import UIKit
 
+//struct ScheduleDates {
+//    var month: String
+//    var dates: [Date]
+//}
+
 struct ScheduleDates {
-    var month: String
+    var month: Int
     var dates: [Date]
 }
 
 
+
+//extension Date {
+//    static func dateDictionary(from arrayOfDates: [Date]) -> [String: [Date]] {
+//        // declare a dictionary
+//        return Dictionary(grouping: arrayOfDates) { date -> String in
+//            // get the month as an int
+//            let monthAsInt = Calendar.current.dateComponents([.month], from: date).month
+//            // convert the int to a string...i think you probably want to return an int value and do the month conversion in your tableview or collection view
+//            let monthName = DateFormatter().monthSymbols[(monthAsInt ?? 0) - 1]
+//            // return the month string
+//            return monthName
+//        }
+//    }
+//}
+
 extension Date {
-    static func dateDictionary(from arrayOfDates: [Date]) -> [String: [Date]] {
+    static func dateDictionary(from arrayOfDates: [Date]) -> [Int: [Date]] {
         // declare a dictionary
-        return Dictionary(grouping: arrayOfDates) { date -> String in
-            // get the month as an int
+        return Dictionary(grouping: arrayOfDates) { date -> Int in
+            // get the month as an Int
             let monthAsInt = Calendar.current.dateComponents([.month], from: date).month
-            // convert the int to a string...i think you probably want to return an int value and do the month conversion in your tableview or collection view
-            let monthName = DateFormatter().monthSymbols[(monthAsInt ?? 0) - 1]
-            // return the month string
-            return monthName
+            return monthAsInt ?? 0
         }
     }
 }
+
 
 // Utility method to generate dates
 func createDate(month: Int, day: Int, year: Int) -> Date? {
@@ -66,4 +84,4 @@ monthDictionary.keys.forEach { key in
     arrayOfStruct.append(scheduleDate)
 }
 
-print(arrayOfStruct)
+arrayOfStruct = arrayOfStruct.sorted(by: { $0.month < $1.month })
